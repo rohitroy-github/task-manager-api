@@ -1,0 +1,5 @@
+✅ Run ESLint locally
+    npm run lint
+
+✅ Autofix
+    npm run lint -- --fix

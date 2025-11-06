@@ -3,3 +3,7 @@
 
 ✅ Autofix
     npm run lint -- --fix
+
+username rohitroy
+password rhtry_password
+string mongodb+srv://rohitroy:rhtry_password@cluster0.44rmict.mongodb.net/?appName=Cluster0

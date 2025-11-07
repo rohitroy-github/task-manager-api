@@ -4,6 +4,6 @@
 ✅ Autofix
     npm run lint -- --fix
 
-username rohitroy
-password rhtry_password
-string mongodb+srv://rohitroy:rhtry_password@cluster0.44rmict.mongodb.net/?appName=Cluster0
+npm run seed        
+
+    runs a script to fill temporary data into mongo db cluster after deleting any existing data

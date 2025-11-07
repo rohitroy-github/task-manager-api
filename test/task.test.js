@@ -1,14 +1,18 @@
 import request from "supertest";
+import mongoose from "mongoose";
 import app from "../src/app.js";
-import { resetTasks } from "../src/data/task.js";
-import { jest } from "@jest/globals";
+import Task from "../src/model/taskModel.js";
 
-describe("Task CRUD", () => {
+describe("Task CRUD (Mongo)", () => {
 
-  beforeEach(() => {
-    jest.resetModules();
-      resetTasks();
+  // ✅ Clear DB before every test
+  beforeEach(async () => {
+    await Task.deleteMany({});
+  });
 
+  // ✅ Close DB after test run
+  afterAll(async () => {
+    await mongoose.connection.close();
   });
 
   it("should create a task with default completed=false", async () => {
@@ -17,7 +21,7 @@ describe("Task CRUD", () => {
       .send({ title: "Learn DevOps" });
 
     expect(res.statusCode).toBe(201);
-    expect(res.body).toHaveProperty("id");
+    expect(res.body).toHaveProperty("_id");
     expect(res.body.title).toBe("Learn DevOps");
     expect(res.body.completed).toBe(false);
   });
@@ -32,8 +36,8 @@ describe("Task CRUD", () => {
   });
 
   it("should get all tasks", async () => {
-    await request(app).post("/tasks").send({ title: "Task A" });
-    await request(app).post("/tasks").send({ title: "Task B" });
+    await Task.create({ title: "Task A" });
+    await Task.create({ title: "Task B" });
 
     const res = await request(app).get("/tasks");
 
@@ -42,29 +46,26 @@ describe("Task CRUD", () => {
   });
 
   it("should get a single task", async () => {
-    const created = await request(app)
-      .post("/tasks")
-      .send({ title: "Test One" });
+    const created = await Task.create({ title: "Test One" });
 
-    const res = await request(app).get(`/tasks/${created.body.id}`);
+    const res = await request(app).get(`/tasks/${created._id}`);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.title).toBe("Test One");
   });
 
   it("should return 404 for non-existent task", async () => {
-    const res = await request(app).get("/tasks/999");
+    const id = new mongoose.Types.ObjectId();
+    const res = await request(app).get(`/tasks/${id}`);
     expect(res.statusCode).toBe(404);
     expect(res.body.error).toBe("Task not found");
   });
 
   it("should update a task", async () => {
-    const created = await request(app)
-      .post("/tasks")
-      .send({ title: "Old Title" });
+    const created = await Task.create({ title: "Old Title" });
 
     const res = await request(app)
-      .put(`/tasks/${created.body.id}`)
+      .put(`/tasks/${created._id}`)
       .send({ title: "New Title", completed: true });
 
     expect(res.statusCode).toBe(200);
@@ -73,8 +74,9 @@ describe("Task CRUD", () => {
   });
 
   it("should return 404 when updating non-existent task", async () => {
+    const id = new mongoose.Types.ObjectId();
     const res = await request(app)
-      .put("/tasks/999")
+      .put(`/tasks/${id}`)
       .send({ title: "Nothing" });
 
     expect(res.statusCode).toBe(404);
@@ -82,20 +84,18 @@ describe("Task CRUD", () => {
   });
 
   it("should delete a task", async () => {
-    const created = await request(app)
-      .post("/tasks")
-      .send({ title: "Delete me" });
+    const created = await Task.create({ title: "Delete me" });
 
-    const res = await request(app).delete(`/tasks/${created.body.id}`);
+    const res = await request(app).delete(`/tasks/${created._id}`);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.success).toBe(true);
   });
 
   it("should return 404 when deleting non-existent task", async () => {
-    const res = await request(app).delete("/tasks/987");
+    const id = new mongoose.Types.ObjectId();
+    const res = await request(app).delete(`/tasks/${id}`);
     expect(res.statusCode).toBe(404);
     expect(res.body.error).toBe("Task not found");
   });
-
 });

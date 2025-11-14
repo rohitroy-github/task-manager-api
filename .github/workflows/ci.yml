@@ -14,7 +14,7 @@ jobs:
       NODE_ENV: test
       TEST_USER_USERNAME: testuser
       TEST_USER_PASSWORD: password
-      JWT_SECRET: testsecret
+      JWT_SECRET: jwt_secret
 
     steps:
       - name: Checkout repository

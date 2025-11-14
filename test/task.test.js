@@ -1,15 +1,14 @@
 import request from "supertest";
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 
 import app from "../src/app.js";
 import User from "../src/model/userModel.js";
 import Task from "../src/model/taskModel.js";
 
-import { createUserAndToken, createTaskForUser } from "./test.utils.js";
-
 import dotenv from "dotenv";
 dotenv.config({ path: ".env.test" });
+
+import { createUserAndToken, createTaskForUser } from "./test.utils.js";
 
 const username = process.env.TEST_USER_USERNAME;
 const password = process.env.TEST_USER_PASSWORD;
@@ -254,14 +253,11 @@ describe("Delete Task API", () => {
 describe("Fetch Task API", () => {
   beforeEach(async () => {
     // Create user and generate JWT
-    user = await User.create({ username, password });
-    token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    ({ user, token } = await createUserAndToken());
 
     // Create sample tasks for that user
-    await Task.create([
-      { title: "Task 1", description: "Test task one", user: user._id },
-      { title: "Task 2", description: "Test task two", user: user._id },
-    ]);
+    await createTaskForUser(user, "Task 1", "Test task one");
+    await createTaskForUser(user, "Task 2", "Test task two");
   });
 
   it("should fetch all tasks for the authenticated user", async () => {

@@ -7,3 +7,15 @@
 npm run seed        
 
     runs a script to fill temporary data into mongo db cluster after deleting any existing data
+
+
+
+
+user 
+    rohitroy
+    password
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTE0NGVjMTg0OWRlOGU5ZmM4ZmFjMjIiLCJpYXQiOjE3NjI5Mzg1NjIsImV4cCI6MTc2MzAyNDk2Mn0.03H_brxXbmVOaLXyum2gQLZFqgjJslUesoc9QRYKtJU
+
+    test
+    password
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTE0YWFmMWNiMTYwZTQ1YWQ0MDU3M2QiLCJpYXQiOjE3NjI5NjIxNjEsImV4cCI6MTc2MzA0ODU2MX0.kkcMBQnECfojr9EM0G0P7RHDmu7G1aSgDcTBxKPy-5k

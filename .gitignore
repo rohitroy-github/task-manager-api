@@ -25,6 +25,7 @@ temp/
 .env
 .env.*
 !.env.example
+.env.test
 
 # ----------------------------------------
 # Build / Coverage / Output
@@ -78,3 +79,4 @@ logs/
 
 # Rohit's files 
 readMeRohit
+test-checks

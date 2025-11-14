@@ -2,25 +2,31 @@ name: Node CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      NODE_ENV: test
+      TEST_USER_USERNAME: testuser
+      TEST_USER_PASSWORD: password
+      JWT_SECRET: testsecret
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: "20"
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-    - name: Install deps
-      run: npm install
+      - name: Install deps
+        run: npm install
 
-    - name: Run tests with coverage
-      run: npm test
+      - name: Run tests with coverage
+        run: npm test

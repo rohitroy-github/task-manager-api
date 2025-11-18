@@ -4,11 +4,6 @@
 ✅ Autofix
     npm run lint -- --fix
 
-npm run seed        
-
-    runs a script to fill temporary data into mongo db cluster after deleting any existing data
-
-
 
 
 user 
@@ -19,3 +14,16 @@ user
     test
     password
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTE0YWFmMWNiMTYwZTQ1YWQ0MDU3M2QiLCJpYXQiOjE3NjI5NjIxNjEsImV4cCI6MTc2MzA0ODU2MX0.kkcMBQnECfojr9EM0G0P7RHDmu7G1aSgDcTBxKPy-5k
+
+        // "tests": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+
+
+If you wanna clear all the existing data in the database just run 
+    npm run clear
+
+If you wanna feed dummy data into the database just run
+    npm run feed 
+
+If you wanna run tests then just run
+    npm run tests
+
